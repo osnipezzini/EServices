@@ -1,6 +1,6 @@
 from models import DeclarativeBase
 
-from sqlalchemy import (BigInteger, String, Column, Sequence, Integer)
+from sqlalchemy import (BigInteger, String, Column, Sequence, Integer, CHAR)
 
 
 class Person(DeclarativeBase):
@@ -10,3 +10,4 @@ class Person(DeclarativeBase):
     doc = Column(String(250), nullable=False)
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
+    flag = Column(CHAR(1), nullable=False, default='A')

@@ -34,8 +34,8 @@ class ClientForm ( wx.Frame ):
 
 		fgSizer1.Add( self.m_staticText1, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 
-		self.m_textCtrl2 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		fgSizer1.Add( self.m_textCtrl2, 1, wx.ALL|wx.EXPAND, 5 )
+		self.text_name = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer1.Add( self.text_name, 1, wx.ALL|wx.EXPAND, 5 )
 
 
 		bSizer4.Add( fgSizer1, 1, wx.EXPAND, 5 )
@@ -73,15 +73,35 @@ class ClientForm ( wx.Frame ):
 		self.Centre( wx.BOTH )
 
 		# Connect Events
+		self.btn_new.Bind( wx.EVT_BUTTON, self.new_client )
+		self.btn_save.Bind( wx.EVT_BUTTON, self.save_client )
 		self.btn_search.Bind( wx.EVT_BUTTON, self.search_client )
+		self.btn_delete.Bind( wx.EVT_BUTTON, self.delete_client )
+		self.btn_options.Bind( wx.EVT_BUTTON, self.open_options_menu )
 
 	def __del__( self ):
 		# Disconnect Events
+		self.btn_new.Unbind( wx.EVT_BUTTON, None )
+		self.btn_save.Unbind( wx.EVT_BUTTON, None )
 		self.btn_search.Unbind( wx.EVT_BUTTON, None )
+		self.btn_delete.Unbind( wx.EVT_BUTTON, None )
+		self.btn_options.Unbind( wx.EVT_BUTTON, None )
 
 
 	# Virtual event handlers, overide them in your derived class
+	def new_client( self, event ):
+		event.Skip()
+
+	def save_client( self, event ):
+		event.Skip()
+
 	def search_client( self, event ):
+		event.Skip()
+
+	def delete_client( self, event ):
+		event.Skip()
+
+	def open_options_menu( self, event ):
 		event.Skip()
 
 
@@ -92,9 +112,9 @@ class ClientForm ( wx.Frame ):
 class ClientSearch ( wx.Dialog ):
 
 	def __init__( self, parent ):
-		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Pesquisa de clientes", pos = wx.DefaultPosition, size = wx.Size( 434,353 ), style = wx.DEFAULT_DIALOG_STYLE )
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Pesquisa de clientes", pos = wx.DefaultPosition, size = wx.Size( 500,350 ), style = wx.DEFAULT_DIALOG_STYLE )
 
-		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.Size( 500,350 ), wx.Size( 640,480 ) )
 
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 
