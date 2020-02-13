@@ -10,6 +10,7 @@ class ClientView(ClientForm):
         super(ClientView, self).__init__(parent)
         self.SetIcon(get_icon())
         self.client = None
+        self.new_client(None)
 
     def search_client(self, event):
         search = ClientSearchView(self)
@@ -37,7 +38,22 @@ class ClientView(ClientForm):
         pass
 
     def new_client(self, event):
-        pass
+        self.client = None
+        from models import Person
+        code = Person().get_seq()
+        self.text_code.SetValue(str(code))
+        self.text_doc.SetValue('')
+        self.text_name.SetValue('')
+        self.text_group_grid.SetValue('2')
+        self.text_group_name.SetValue('CLIENTES')
+        self.text_zipcode.SetValue('')
+        self.text_address.SetValue('')
+        self.text_district.SetValue('')
+        self.text_city_name.SetValue('')
+        self.text_state.SetValue('')
+        self.text_city_code.SetValue('')
+        self.text_country_name.SetValue('Brasil')
+        self.text_doc.SetFocus()
 
     def delete_client(self, event):
         if self.text_name.GetValue() != '':

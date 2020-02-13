@@ -14,7 +14,10 @@ class MainView(MainUi):
         session = DBSession()
 
         # # Insert a Person in the person table
-        new_person = Person(name='Osni Pezzini Jr', email='teste@teste.com', doc='000.000.000-00')
+        new_person = Person(name='Osni Pezzini Jr', email='teste@teste.com', doc='000.000.000-00',
+                            city_code=4202404, city_name='Blumenau', state='SC', zipcode='89037-430',
+                            district='Água Verde', country='Brasil'
+                            )
         session.add(new_person)
         session.commit()
         #
@@ -29,3 +32,5 @@ class MainView(MainUi):
         gui = ClientView(self)
 
         gui.Show()
+
+

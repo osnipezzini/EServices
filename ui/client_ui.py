@@ -30,21 +30,21 @@ class ClientForm ( wx.Frame ):
 
 		bSizer61 = wx.BoxSizer( wx.HORIZONTAL )
 
+		self.m_staticText11 = wx.StaticText( self, wx.ID_ANY, u"Código", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText11.Wrap( -1 )
+
+		bSizer61.Add( self.m_staticText11, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+
+		self.text_code = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer61.Add( self.text_code, 0, wx.ALL, 5 )
+
 		self.m_staticText1 = wx.StaticText( self, wx.ID_ANY, u"CPF/CNPJ", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText1.Wrap( -1 )
 
 		bSizer61.Add( self.m_staticText1, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 
 		self.text_doc = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer61.Add( self.text_doc, 0, wx.ALL, 5 )
-
-		self.m_staticText2 = wx.StaticText( self, wx.ID_ANY, u"Nome", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText2.Wrap( -1 )
-
-		bSizer61.Add( self.m_staticText2, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
-
-		self.text_name = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer61.Add( self.text_name, 1, wx.ALL|wx.EXPAND, 5 )
+		bSizer61.Add( self.text_doc, 1, wx.ALL, 5 )
 
 		self.m_checkBox1 = wx.CheckBox( self, wx.ID_ANY, u"Ativo", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_checkBox1.SetValue(True)
@@ -52,6 +52,19 @@ class ClientForm ( wx.Frame ):
 
 
 		bSizer8.Add( bSizer61, 0, wx.EXPAND|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
+
+		bSizer13 = wx.BoxSizer( wx.HORIZONTAL )
+
+		self.m_staticText2 = wx.StaticText( self, wx.ID_ANY, u"Nome", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText2.Wrap( -1 )
+
+		bSizer13.Add( self.m_staticText2, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+
+		self.text_name = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer13.Add( self.text_name, 1, wx.ALL|wx.EXPAND, 5 )
+
+
+		bSizer8.Add( bSizer13, 0, wx.EXPAND, 5 )
 
 		bSizer9 = wx.BoxSizer( wx.HORIZONTAL )
 
