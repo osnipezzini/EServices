@@ -16,6 +16,23 @@ class ClientView(ClientForm):
         if search.ShowModal() == wx.OK:
             print('OK')
 
+    def get_zip_code( self, event ):
+        cep = self.text_zipcode.GetValue()
+        from elibs.utils import dict_to_prop
+        from elibs.utils import get_cep
+        res = get_cep(cep)
+        result = dict_to_prop(res)
+        self.text_zipcode.SetValue(result.cep)
+        self.text_address.SetValue(result.logradouro)
+        self.text_district.SetValue(result.bairro)
+        self.text_city_name.SetValue(result.localidade)
+        self.text_state.SetValue(result.uf)
+        self.text_city_code.SetValue(result.ibge)
+        self.text_country_name.SetValue('Brasil')
+        self.text_address_nr.SetFocus()
+
+
+
     def save_client(self, event):
         pass
 
