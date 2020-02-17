@@ -1,14 +1,21 @@
-from sqlalchemy import (String, Column, Sequence, Integer, CHAR)
+from sqlalchemy import (String, Column, Sequence, Integer, CHAR, ForeignKey)
+from sqlalchemy.orm import relationship
 
-from models import DeclarativeBase, DBSession
+from models import DeclarativeBase
 
-seq = Sequence('client_cod_seq')
+
+class PersonGroup(DeclarativeBase):
+    __tablename__ = 'person_group'
+
+    code = Column(Integer, Sequence('person_group_seq'))
+    name = Column(String(250), nullable=False)
+    flag = Column(CHAR(1), default='A', nullable=False)
 
 
 class Person(DeclarativeBase):
     __tablename__ = 'person'
 
-    code = Column(Integer, seq)
+    code = Column(Integer, Sequence('client_cod_seq'))
     doc = Column(String(250), nullable=False)
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
@@ -21,8 +28,6 @@ class Person(DeclarativeBase):
     country = Column(String(50), nullable=True)
     address = Column(String(50), nullable=True)
     address_nr = Column(String(50), nullable=False, default='S/N')
+    group_grid = Column(Integer, ForeignKey('person_group.grid'))
+    person = relationship(PersonGroup)
 
-    def get_seq(self):
-        s = DBSession()
-        val = s.execute(seq)
-        return val

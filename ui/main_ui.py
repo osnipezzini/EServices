@@ -9,6 +9,7 @@
 
 import wx
 import wx.xrc
+import wx.dataview
 
 ###########################################################################
 ## Class MainUi
@@ -67,6 +68,77 @@ class MainUi ( wx.Frame ):
 
 	# Virtual event handlers, overide them in your derived class
 	def open_client( self, event ):
+		event.Skip()
+
+
+###########################################################################
+## Class Search
+###########################################################################
+
+class Search ( wx.Dialog ):
+
+	def __init__( self, parent ):
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Pesquisa", pos = wx.DefaultPosition, size = wx.Size( 500,350 ), style = wx.DEFAULT_DIALOG_STYLE )
+
+		self.SetSizeHints( wx.Size( 500,350 ), wx.Size( 640,480 ) )
+
+		bSizer1 = wx.BoxSizer( wx.VERTICAL )
+
+		bSizer3 = wx.BoxSizer( wx.VERTICAL )
+
+		self.data_search = wx.dataview.DataViewListCtrl( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer3.Add( self.data_search, 1, wx.ALL|wx.EXPAND, 5 )
+
+
+		bSizer1.Add( bSizer3, 1, wx.EXPAND, 5 )
+
+		bSizer2 = wx.BoxSizer( wx.HORIZONTAL )
+
+		choice_search_typeChoices = [ u"Nome", u"CPF/CNPJ" ]
+		self.choice_search_type = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, choice_search_typeChoices, 0 )
+		self.choice_search_type.SetSelection( 0 )
+		bSizer2.Add( self.choice_search_type, 0, wx.ALL, 5 )
+
+		self.text_search = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_PROCESS_ENTER )
+		bSizer2.Add( self.text_search, 1, wx.ALL, 5 )
+
+		self.btn_options = wx.Button( self, wx.ID_ANY, u"Opções", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer2.Add( self.btn_options, 0, wx.ALL, 5 )
+
+
+		bSizer1.Add( bSizer2, 0, wx.EXPAND, 5 )
+
+
+		self.SetSizer( bSizer1 )
+		self.Layout()
+
+		self.Centre( wx.BOTH )
+
+		# Connect Events
+		self.data_search.Bind( wx.dataview.EVT_DATAVIEW_ITEM_ACTIVATED, self.load_client, id = wx.ID_ANY )
+		self.text_search.Bind( wx.EVT_KEY_DOWN, self.process_keys )
+		self.text_search.Bind( wx.EVT_TEXT_ENTER, self.search )
+		self.btn_options.Bind( wx.EVT_BUTTON, self.open_options )
+
+	def __del__( self ):
+		# Disconnect Events
+		self.data_search.Unbind( wx.dataview.EVT_DATAVIEW_ITEM_ACTIVATED, None, id = wx.ID_ANY )
+		self.text_search.Unbind( wx.EVT_KEY_DOWN, None )
+		self.text_search.Unbind( wx.EVT_TEXT_ENTER, None )
+		self.btn_options.Unbind( wx.EVT_BUTTON, None )
+
+
+	# Virtual event handlers, overide them in your derived class
+	def load_client( self, event ):
+		event.Skip()
+
+	def process_keys( self, event ):
+		event.Skip()
+
+	def search( self, event ):
+		event.Skip()
+
+	def open_options( self, event ):
 		event.Skip()
 
 
