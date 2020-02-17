@@ -43,4 +43,9 @@ class MainView(MainUi):
 
         gui.Show()
 
+    def open_product(self, event):
+        from views.create.product import ProductView
+        gui = ProductView(self)
+        gui.Show()
+
 

@@ -62,7 +62,7 @@
                 <property name="orient">wxVERTICAL</property>
                 <property name="permission">none</property>
             </object>
-            <object class="wxMenuBar" expanded="0">
+            <object class="wxMenuBar" expanded="1">
                 <property name="bg"></property>
                 <property name="context_help"></property>
                 <property name="context_menu">1</property>
@@ -138,7 +138,7 @@
                     <property name="name">m_menu4</property>
                     <property name="permission">protected</property>
                 </object>
-                <object class="wxMenu" expanded="0">
+                <object class="wxMenu" expanded="1">
                     <property name="label">Cadastros</property>
                     <property name="name">m_menu41</property>
                     <property name="permission">protected</property>
@@ -155,6 +155,20 @@
                         <property name="shortcut"></property>
                         <property name="unchecked_bitmap"></property>
                         <event name="OnMenuSelection">open_client</event>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap"></property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_ANY</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">Produtos</property>
+                        <property name="name">menu_product</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut"></property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">open_product</event>
                     </object>
                 </object>
             </object>

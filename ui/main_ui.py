@@ -50,6 +50,9 @@ class MainUi ( wx.Frame ):
 		self.menu_client = wx.MenuItem( self.m_menu41, wx.ID_ANY, u"Clientes", wx.EmptyString, wx.ITEM_NORMAL )
 		self.m_menu41.Append( self.menu_client )
 
+		self.menu_product = wx.MenuItem( self.m_menu41, wx.ID_ANY, u"Produtos", wx.EmptyString, wx.ITEM_NORMAL )
+		self.m_menu41.Append( self.menu_product )
+
 		self.m_menubar1.Append( self.m_menu41, u"Cadastros" )
 
 		self.SetMenuBar( self.m_menubar1 )
@@ -60,14 +63,19 @@ class MainUi ( wx.Frame ):
 
 		# Connect Events
 		self.Bind( wx.EVT_MENU, self.open_client, id = self.menu_client.GetId() )
+		self.Bind( wx.EVT_MENU, self.open_product, id = self.menu_product.GetId() )
 
 	def __del__( self ):
 		# Disconnect Events
 		self.Unbind( wx.EVT_MENU, id = self.menu_client.GetId() )
+		self.Unbind( wx.EVT_MENU, id = self.menu_product.GetId() )
 
 
 	# Virtual event handlers, overide them in your derived class
 	def open_client( self, event ):
+		event.Skip()
+
+	def open_product( self, event ):
 		event.Skip()
 
 

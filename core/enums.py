@@ -8,3 +8,9 @@ class PersonType(Enum):
     WORKER = 1,
     PROVIDER = 2,
     PUBLIC_ORGANIZATION = 3,
+
+
+class ProductType(Enum):
+    PRODUCT = 0,
+    SERVICE = 1,
+    FUEL = 2
