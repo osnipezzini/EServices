@@ -1,11 +1,11 @@
 from sqlalchemy.orm import relationship
 
-from models import DeclarativeBase, Person
+from models import Base, Person
 
 from sqlalchemy import (BigInteger, String, Column, Sequence, Integer, Float, ForeignKey)
 
 
-class Product(DeclarativeBase):
+class Product(Base):
     __tablename__ = 'product'
 
     code = Column(Integer, Sequence('product_cod'), unique=True)

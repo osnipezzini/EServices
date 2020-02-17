@@ -49,8 +49,8 @@ class ReprBase(object):
                        if not key.startswith('_')]))
 
 
-DeclarativeBase = sad.declarative_base(cls=ReprBase)
-metadata = DeclarativeBase.metadata
+Base = sad.declarative_base(cls=ReprBase)
+metadata = Base.metadata
 
 
 def init_model(engine):

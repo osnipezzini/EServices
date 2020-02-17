@@ -1,10 +1,10 @@
 from sqlalchemy import (String, Column, Sequence, Integer, CHAR, ForeignKey)
 from sqlalchemy.orm import relationship
 
-from models import DeclarativeBase
+from models import Base
 
 
-class PersonGroup(DeclarativeBase):
+class PersonGroup(Base):
     __tablename__ = 'person_group'
 
     code = Column(Integer, Sequence('person_group_seq'))
@@ -12,13 +12,13 @@ class PersonGroup(DeclarativeBase):
     flag = Column(CHAR(1), default='A', nullable=False)
 
 
-class Person(DeclarativeBase):
+class Person(Base):
     __tablename__ = 'person'
 
     code = Column(Integer, Sequence('client_cod_seq'))
-    doc = Column(String(250), nullable=False)
+    doc = Column(String(20), nullable=False)
     name = Column(String(250), nullable=False)
-    email = Column(String(250), nullable=False)
+    email = Column(String(200), nullable=False)
     flag = Column(CHAR(1), nullable=False, default='A')
     city_code = Column(String(10), nullable=False)
     city_name = Column(String(100), nullable=False)
