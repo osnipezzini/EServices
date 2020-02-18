@@ -6,7 +6,8 @@ __all__ = ['encrypt', 'decrypt']
 
 
 def _get_key():
-    return os.environ.get('HASH_KEY').encode('utf8')
+    key = os.environ.get('HASH_KEY').encode()
+    return key
 
 
 def encrypt(message):
