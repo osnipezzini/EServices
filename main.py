@@ -6,9 +6,10 @@ from views.main import MainView
 
 def main():
     from core.license import License
-    if License().check():
+    from core import is_debug
+    if License().check() or is_debug():
         from core.config import Config
-        if Config().check():
+        if Config().check() or is_debug():
             widget = MainView()
             widget.Show()
         else:
@@ -26,5 +27,9 @@ def main():
 
 if __name__ == '__main__':
     app = BaseApp()
+    import os
+
+    os.environ['HASH_KEY'] = '81HqDtbqAywKSOumSha3BhWNOdQ26slT6K0YaZeZyPs='
+
     main()
     app.MainLoop()

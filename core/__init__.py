@@ -12,7 +12,7 @@ import models as database
 from .enums import *
 from .hash import encrypt, decrypt
 
-__all__ = ['PersonType', 'get_icon', 'BASEDIR', 'log', 'BaseApp']
+__all__ = ['PersonType', 'get_icon', 'BASEDIR', 'log', 'BaseApp', 'is_debug']
 APP_NAME = 'EServices'
 BASEDIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # logging
@@ -66,6 +66,12 @@ def get_db_url():
     dbUrl = 'postgres://postgres:@localhost/my_app'
     log.debug("db: %s\n\n" % dbUrl)
     return dbUrl
+
+
+def is_debug():
+    if os.environ.get('ELLITEDEV'):
+        return True
+    return False
 
 
 def get_icon():
