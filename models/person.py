@@ -15,7 +15,7 @@ class PersonGroup(Base):
 class Person(Base):
     __tablename__ = 'person'
 
-    code = Column(Integer, Sequence('client_cod_seq'))
+    code = Column(Integer, Sequence('person_code_seq'))
     doc = Column(String(20), nullable=False)
     name = Column(String(250), nullable=False)
     email = Column(String(200), nullable=False)

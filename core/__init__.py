@@ -3,29 +3,50 @@
 """base_app for EServices"""
 import os
 import sys
-import wx
+from logging.handlers import TimedRotatingFileHandler
 
-from elibs import join_path
-from .enums import *
+import wx
+from elibs import join_path, check_path
+
 import models as database
+from .enums import *
 
 __all__ = ['PersonType', 'get_icon', 'BASEDIR', 'log', 'BaseApp']
-
+APP_NAME = 'EServices'
 BASEDIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # logging
 import logging.config
 
-logSQLFile = os.path.join(BASEDIR, 'sqllog.txt')
-logConfigFile = os.path.join(BASEDIR, 'logging.conf')
+LOGPATH = os.path.join(BASEDIR, 'log')
+check_path(LOGPATH)
+log = logging.getLogger(__name__)
+logSQLFile = os.path.join(BASEDIR, 'log', 'sqllog.txt')
+logConfigFile = os.path.join(BASEDIR, 'share', 'logging.conf')
 if os.path.exists(logConfigFile):
     # load config from config file, see logging.conf for configuration settings
     logging.config.fileConfig(logConfigFile)
 else:
     # or just do a basic config
-    format = '%(name)s - %(levelname)s - %(filename)s - %(lineno)d - %(message)s'
-    logging.basicConfig(format=format, level=logging.NOTSET)
+    LOGFILE = join_path(LOGPATH, f"{APP_NAME}.log")
 
-log = logging.getLogger(__package__)
+    handler = TimedRotatingFileHandler(
+        filename=LOGFILE, when='midnight', backupCount=30)
+    log.addHandler(handler)
+
+    formatter = logging.Formatter(
+        '%(asctime)s %(levelname)-5.5s [%(name)s] %(message)s',
+        datefmt='%d/%m/%Y %H:%M:%S'
+    )
+    handler.setFormatter(formatter)
+    if os.environ.get('ASLOGLEVEL'):
+        log.setLevel(logging.DEBUG)
+    else:
+        log.setLevel(logging.DEBUG)
+    console = logging.StreamHandler()
+    console.setFormatter(formatter)
+    log.addHandler(console)
+    # format = '%(name)s - %(levelname)s - %(filename)s - %(lineno)d - %(message)s'
+    # logging.basicConfig(format=format, level=logging.NOTSET)
 
 ICON = os.path.join(BASEDIR, 'share', 'images', 'logo_system.ico')
 
@@ -33,6 +54,17 @@ ICON = os.path.join(BASEDIR, 'share', 'images', 'logo_system.ico')
 def _displayHook(obj):
     if obj is not None:
         print(repr(obj))
+
+
+def get_db_url():
+    # dbFile = os.path.abspath(os.path.join(pPath, 'devdata.sqlite'))
+    dbFile = "postgres://postgres:Dw@6458995@localhost:5432/my_app"
+    # define the db driver name here or get it from a configuration file
+    dbDriver = "postgresql"
+    dbUrl = database.sa.engine.url.URL(dbDriver, database=dbFile)
+    dbUrl = 'postgres://postgres:@localhost/my_app'
+    log.debug("db: %s\n\n" % dbUrl)
+    return dbUrl
 
 
 def get_icon():
@@ -50,15 +82,8 @@ class BaseApp(wx.App):
         sys.displayhook = _displayHook
 
         self._dataNeedsSaving = False
-        
-        # dbFile = os.path.abspath(os.path.join(pPath, 'devdata.sqlite'))
-        dbFile = "postgres://postgres:Dw@6458995@localhost:5432/my_app"
-        # define the db driver name here or get it from a configuration file
-        dbDriver = "postgresql"
-        dbUrl = database.sa.engine.url.URL(dbDriver, database=dbFile)
-        log.debug("db: %s\n\n" % dbUrl)
 
-        self.session = self.connectToDatabase(dbFile)
+        self.session = self.connectToDatabase(get_db_url())
 
         self.doAppConfig()
         log.debug('end init')
