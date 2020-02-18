@@ -5,9 +5,10 @@ from views.main import MainView
 
 
 def main():
-    import os
-    if os.path.exists('eservices.key'):
-        if os.path.exists('config.db'):
+    from core.license import License
+    if License().check():
+        from core.config import Config
+        if Config().check():
             widget = MainView()
             widget.Show()
         else:

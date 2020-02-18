@@ -37,7 +37,7 @@ class MainView(MainUi):
         # for user, product in session.query(Person, Product):
         #     print(product.person)
 
-    def open_client( self, event ):
+    def open_client(self, event):
         from views.create.client import ClientView
         gui = ClientView(self)
 

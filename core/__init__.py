@@ -10,6 +10,7 @@ from elibs import join_path, check_path
 
 import models as database
 from .enums import *
+from .hash import encrypt, decrypt
 
 __all__ = ['PersonType', 'get_icon', 'BASEDIR', 'log', 'BaseApp']
 APP_NAME = 'EServices'
