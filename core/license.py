@@ -7,8 +7,10 @@ from core import BASEDIR
 
 class License:
     def __init__(self):
-        self.config_file = os.path.join(BASEDIR, 'eservices.key')
+        self.license_file = os.path.join(BASEDIR, 'eservices.key')
         self.key = None
+        self.company = None
+        self.valid_date = None
 
     def load(self):
         if self.check():
@@ -16,16 +18,17 @@ class License:
             import json
 
             try:
-                with open(self.config_file, 'w', encoding='UTF8') as file:
-                    rd = file.read()
-                    dec_cfg = json.loads(decrypt(rd))
-                    return dict_to_prop(dec_cfg)
+                file = open(self.license_file)
+                rd = file.read()
+                dec_cfg = decrypt(rd)
+                return dict_to_prop(json.loads(dec_cfg))
             except Exception as e:
+                print(e)
                 from core import log
                 log.error(e)
 
     def check(self):
-        if os.path.exists(self.config_file):
+        if os.path.exists(self.license_file):
             return True
         return False
 
@@ -33,8 +36,9 @@ class License:
         from core import encrypt
         import json
         enc_cfg = encrypt(json.dumps(config))
+        print(config)
         try:
-            with open(self.config_file, 'w', encoding='UTF8') as file:
+            with open(self.license_file, 'w', encoding='UTF8') as file:
                 file.write(enc_cfg)
             return True
         except Exception as e:
