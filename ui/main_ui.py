@@ -8,9 +8,8 @@
 ###########################################################################
 
 import wx
-import wx.dataview
 import wx.xrc
-
+import wx.dataview
 
 ###########################################################################
 ## Class MainUi
@@ -58,7 +57,7 @@ class MainUi ( wx.Frame ):
 
 		self.SetMenuBar( self.m_menubar1 )
 
-        self.status_bar = self.CreateStatusBar(3, wx.STB_DEFAULT_STYLE | wx.STB_SIZEGRIP, wx.ID_ANY)
+		self.status_bar = self.CreateStatusBar( 3, wx.STB_DEFAULT_STYLE|wx.STB_SIZEGRIP, wx.ID_ANY )
 
 		self.Centre( wx.BOTH )
 

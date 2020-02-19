@@ -202,8 +202,8 @@
                         <object class="sizeritem" expanded="1">
                             <property name="border">5</property>
                             <property name="flag">wxALL</property>
-                            <property name="proportion">1</property>
-                            <object class="wxTextCtrl" expanded="1">
+                            <property name="proportion">0</property>
+                            <object class="CustomControl" expanded="1">
                                 <property name="BottomDockable">1</property>
                                 <property name="LeftDockable">1</property>
                                 <property name="RightDockable">1</property>
@@ -217,9 +217,12 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
+                                <property name="class">MaskedTextCtrl</property>
                                 <property name="close_button">1</property>
+                                <property name="construction">self.text_ident = MaskedTextCtrl(self, -1, &apos;&apos;,mask=&apos;##.###.###/####-##&apos; )</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
+                                <property name="declaration"></property>
                                 <property name="default_pane">0</property>
                                 <property name="dock">Dock</property>
                                 <property name="dock_fixed">0</property>
@@ -227,14 +230,14 @@
                                 <property name="enabled">1</property>
                                 <property name="fg"></property>
                                 <property name="floatable">1</property>
-                                <property name="font">,90,92,12,70,0</property>
+                                <property name="font">,90,90,12,70,0</property>
                                 <property name="gripper">0</property>
                                 <property name="hidden">0</property>
                                 <property name="id">wxID_ANY</property>
+                                <property name="include">from wx.lib.masked import TextCtrl as MaskedTextCtrl</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
                                 <property name="maximum_size"></property>
-                                <property name="maxlength"></property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
                                 <property name="minimum_size"></property>
@@ -247,17 +250,12 @@
                                 <property name="pin_button">1</property>
                                 <property name="pos"></property>
                                 <property name="resize">Resizable</property>
+                                <property name="settings"></property>
                                 <property name="show">1</property>
                                 <property name="size"></property>
-                                <property name="style"></property>
                                 <property name="subclass">; ; forward_declare</property>
                                 <property name="toolbar_pane">0</property>
                                 <property name="tooltip"></property>
-                                <property name="validator_data_type"></property>
-                                <property name="validator_style">wxFILTER_NONE</property>
-                                <property name="validator_type">wxDefaultValidator</property>
-                                <property name="validator_variable"></property>
-                                <property name="value"></property>
                                 <property name="window_extra_style"></property>
                                 <property name="window_name"></property>
                                 <property name="window_style"></property>
