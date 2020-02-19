@@ -10,9 +10,14 @@ class MainView(MainUi):
         self.SetSize((800, 600))
         self.Maximize()
         self.Centre()
-        lic = License().load()
-        self.status_bar.SetStatusText(f"Software registrado para : {lic.Company}")
-
+        lic = License()
+        lic.load()
+        if lic.load():
+            self.status_bar.SetStatusText(f"Software registrado para : {lic.company}")
+        else:
+            from wx import MessageBox, ICON_ERROR
+            MessageBox('Ocorreu um erro ao validar a licença do sistema , o sistema será encerrado agora !',
+                       'Erro no licenciamento', style=ICON_ERROR)
 
     def open_client(self, event):
         from views.create.client import ClientView
