@@ -28,6 +28,6 @@ class ConfigView(ConfigUI):
         if len(user) == 0:
             user = 'postgres'
 
-        cfg = dict(host=host, port=port, name=name, user=user, password=password)
+        cfg = dict(host=host, port=port, name=name, user=user, password=password, driver='PostgreSQL')
         config.save(cfg)
         wx.MessageBox('Configurações salvas !', 'Sucesso', style=wx.OK | wx.CENTRE | wx.ICON_INFORMATION)
