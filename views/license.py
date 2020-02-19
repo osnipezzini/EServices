@@ -29,5 +29,5 @@ class LicenseView(LicenseUI):
             wx.MessageBox('Sistema registrado com sucesso para : ' + name, 'Sucesso')
             self.EndModal(wx.OK)
         else:
-            wx.MessageBox('Ocorreu um erro ao registrar o sistema , verifique o log para mais detalhes',
-                          'Sucesso', style=wx.ICON_ERROR)
+            wx.MessageBox('Ocorreu o seguinte erro ao registrar o sistema :\n' + name,
+                          'Error', style=wx.ICON_ERROR)
