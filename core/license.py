@@ -1,8 +1,9 @@
 import os
+import wx
 
 from elibs import dict_to_prop
 
-from core import BASEDIR
+from core import BASEDIR, log
 
 
 class License:
@@ -11,25 +12,44 @@ class License:
         self.key = None
         self.company = None
         self.valid_date = None
+        self.server_ip = None
+
+    def _remove(self):
+        import os
+        os.remove(self.license_file)
 
     def load(self):
-        if self.check():
-            from core import decrypt
-            import json
-
-            try:
-                file = open(self.license_file)
+        from core import decrypt
+        import json
+        try:
+            with open(self.license_file) as file:
                 rd = file.read()
                 dec_cfg = decrypt(rd)
-                return dict_to_prop(json.loads(dec_cfg))
-            except Exception as e:
-                print(e)
-                from core import log
-                log.error(e)
+                lic = dict_to_prop(json.loads(dec_cfg))
+                import datetime
+                valid_at = datetime.datetime.strptime(lic.ValidAt, '%Y-%m-%d')
+                if valid_at < datetime.datetime.now():
+                    wx.MessageBox('Validade da licença expirada , o sistema será encerrado',
+                                  'Tempo expirado', wx.ICON_ERROR)
+                    file.close()
+                    self._remove()
+                    return False
+                self.company = lic.Company
+                self.valid_date = valid_at
+                self.server_ip = lic.ServerIP
+            return True
+        except Exception as e:
+            print(e)
+            from core import log
+            log.error(e)
+            return False
 
     def check(self):
         if os.path.exists(self.license_file):
-            return True
+            try:
+                self.load()
+            except Exception as e:
+                log.error(e)
         return False
 
     def save(self, config=dict):
