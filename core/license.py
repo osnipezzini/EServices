@@ -1,5 +1,4 @@
 import os
-import random
 
 from elibs import dict_to_prop
 
@@ -60,23 +59,24 @@ class License:
         return False
 
     def generate(self):
-        key = ''
+        import wmi
+        c = wmi.WMI()
+        for s in c.Win32_Processor():
+            key = s.ProcessorId
+
         chunk = ''
-        check_digit_count = 0
-        alphabet = 'abcdefghijklmnopqrstuvwxyz1234567890'
-        while True:
-            while len(key) < 25:
-                char = random.choice(alphabet)
-                key += char
-                chunk += char
-                if len(chunk) == 4:
-                    key += '-'
-                    chunk = ''
-            self.key = key[:-1]
-            if self.verify():
-                return self.key.upper()
-            else:
-                key = ''
+        serial = ''
+        count = 0
+        for char in key:
+            serial += char
+            chunk += char
+            count += 1
+            if len(chunk) == 4 and not (len(key) == count):
+                serial += '-'
+                chunk = ''
+
+        self.key = serial.upper()
+        return self.key
 
     def get(self, machine, cpf, password):
         """Constructs and sends a :class:`Request <Request>`.
@@ -92,11 +92,12 @@ class License:
             cpf=cpf,
             password=password
         )
-        rs = requests.get(
-            'https://ellitedev.herokuapp.com/api/v1/register',
-            params=params
+        rs = requests.post(
+            'https://ellitedev.herokuapp.com/api/v1/register/',
+            data=params
         )
         r = rs.json()
-        if self.save(r):
-            return True, r[0]['name']
-        return False, 'Not Registered'
+        if rs.status_code == 200:
+            if self.save(r):
+                return True, r['Company']
+        return False, r['error']
