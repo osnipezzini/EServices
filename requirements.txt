@@ -7,3 +7,5 @@ urllib3
 wxPython
 alembic
 cryptography
+pywin32
+wmi
