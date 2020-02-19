@@ -1,7 +1,5 @@
 from core import get_icon
-from models import DBSession, Product
 from ui.main_ui import MainUi
-from elibs import MainWindow
 
 
 class MainView(MainUi):
@@ -47,5 +45,3 @@ class MainView(MainUi):
         from views.create.product import ProductView
         gui = ProductView(self)
         gui.Show()
-
-
