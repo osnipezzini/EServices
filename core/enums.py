@@ -14,3 +14,9 @@ class ProductType(Enum):
     PRODUCT = 0,
     SERVICE = 1,
     FUEL = 2
+
+
+class DBDriver(Enum):
+    SQLite = 0,
+    PostgreSQL = 1,
+    MySQL = 2
