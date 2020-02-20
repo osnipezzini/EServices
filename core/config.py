@@ -27,32 +27,32 @@ class Config:
     def load(self):
         from core import decrypt
         import json
-
-        try:
-            with open(self.config_file, 'w', encoding='UTF8') as file:
-                rd = file.read()
-                dec_cfg = json.loads(decrypt(rd))
-                cfg = dict_to_prop(dec_cfg)
-                self.db_host = cfg.host
-                self.db_port = cfg.port if cfg.port != '' else None
-                self.db_name = cfg.name
-                self.db_user = cfg.user
-                self.db_password = cfg.password if cfg.password != '' else None
-                if cfg.driver == 'PostgreSQL':
-                    self.db_driver = enums.DBDriver.PostgreSQL
-                if cfg.driver == 'MySQL':
-                    self.db_driver = enums.DBDriver.MySQL
-                if cfg.driver == 'SQLite':
-                    self.db_driver = enums.DBDriver.SQLite
-                return True
-        except Exception as e:
-            log.error(e)
+        if os.path.exists(self.config_file):
+            try:
+                with open(self.config_file) as file:
+                    rd = file.read()
+                    dec_cfg = json.loads(decrypt(rd))
+                    cfg = dict_to_prop(dec_cfg)
+                    self.db_host = cfg.host
+                    self.db_port = cfg.port if cfg.port != '' else None
+                    self.db_name = cfg.name
+                    self.db_user = cfg.user
+                    self.db_password = cfg.password if cfg.password != '' else None
+                    if cfg.driver == 'PostgreSQL':
+                        self.db_driver = enums.DBDriver.PostgreSQL
+                    if cfg.driver == 'MySQL':
+                        self.db_driver = enums.DBDriver.MySQL
+                    if cfg.driver == 'SQLite':
+                        self.db_driver = enums.DBDriver.SQLite
+                    return True
+            except Exception as e:
+                log.error(e)
+        return False
 
     def check(self):
         if os.path.exists(self.config_file):
             try:
                 self.load()
-                print(self)
                 return True
             except Exception as e:
                 os.remove(self.config_file)
