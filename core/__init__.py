@@ -58,14 +58,17 @@ def _displayHook(obj):
 
 
 def get_db_url():
-    # dbFile = os.path.abspath(os.path.join(pPath, 'devdata.sqlite'))
-    dbFile = "postgres://postgres:Dw@6458995@localhost:5432/my_app"
-    # define the db driver name here or get it from a configuration file
-    dbDriver = "postgresql"
-    dbUrl = database.sa.engine.url.URL(dbDriver, database=dbFile)
-    dbUrl = 'postgres://postgres:@localhost/my_app'
-    log.debug("db: %s\n\n" % dbUrl)
-    return dbUrl
+    try:
+        if is_debug():
+            return 'postgres://postgres@localhost/my_app'
+        from core.config import Config
+        cfg = Config()
+        cfg.load()
+        if not cfg.load():
+            raise Exception('Configuração não encontrada ou não pode ser carregada.')
+        return cfg.__str__()
+    except Exception as e:
+        log.error(e)
 
 
 def is_debug():
@@ -89,8 +92,12 @@ class BaseApp(wx.App):
         sys.displayhook = _displayHook
 
         self._dataNeedsSaving = False
-
-        self.session = self.connectToDatabase(get_db_url())
+        url = get_db_url()
+        if url is None:
+            if wx.MessageBox('Configuração não encontrada ou não pode ser carregada .', 'Erro ao validar configuração ',
+                             style=wx.ICON_ERROR):
+                self.Destroy()
+        self.session = self.connectToDatabase(url)
 
         self.doAppConfig()
         log.debug('end init')
